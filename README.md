@@ -27,7 +27,7 @@ typedByTheUser = entry('window title','window example text')
  * Implement progress
  * Implement question
  * Implement text information
- * implement warning
+ * ~~implement warning~~
  * Implement scale
  * ~~Implement color selection~~
  * Implement forms

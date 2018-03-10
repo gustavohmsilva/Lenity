@@ -37,16 +37,14 @@ function checkIsPassword(isPassword)
 end
 
 function checkDimensions(type, x)
-	assert(type(type) == 'width' or type(type) == 'height')
-	assert(type(x) == 'number')
-	if not (x == 0) or not (x == nil) then
+	if x == 0 or x == nil then
+		x = ''
+	else
 		if type == 'height' then
 			x = ' --height='..x
 		elseif type == 'width' then
 			x = ' --width='..x
 		end
-	else
-		x = ''
 	end
 	return x
 end
@@ -79,7 +77,7 @@ function checkWindowIcon(windowIcon)
 end
 
 function checkNoWrap(noWrap)
-	assert(type(noWrap) == 'boolean' or noWrap == nil)
+	assert((type(noWrap) == 'boolean') or (noWrap == nil))
 	if noWrap == true then
 		noWrap = ' --no-wrap'
 	elseif noWrap == false or noWrap == nil then
@@ -117,7 +115,6 @@ end
 
 function checkIcons(icon)
 	inList = false
-	assert(type(icon) == 'string')
 	iconsList = {
 		"address-book-new",
 		"application-exit",
@@ -419,7 +416,7 @@ function checkIcons(icon)
 	return icon
 end
 
-function entry(title, text, entryText, isPassword, height, width, timeout)
+function entry(title, text, entryText, isPassword, width, height, timeout)
 	-- call validation of fields
 	title = checkTitle(title)
 	text = checkText(text)
@@ -429,31 +426,45 @@ function entry(title, text, entryText, isPassword, height, width, timeout)
 	width = checkDimensions("width", width)
 	timeout = checkTimeout(timeout)
 	-- process zenity command and return
-	local command = "zenity --entry"..title..text..entryText..isPassword..height..width..timeout
+	local command = "zenity --entry"..title..text..entryText..isPassword..width..height..timeout
 	local f = io.popen(command)
 	local l = f:read("*a")
 	f:close()
 	return l:gsub("\n","")
 end
 
-function info(title, text, icon, noWrap, width, height)
+function info(title, text, icon, noWrap, width, height, timeout)
 	title = checkTitle(title)
 	text = checkText(text)
 	icon = checkIcons(icon)
 	noWrap = checkNoWrap(noWrap)
 	width = checkDimensions('width', width)
 	height = checkDimensions('height', height)
-	command = 'zenity --info'..title..text..icon..noWrap..width..height
+	timeout = checkTimeout(timeout)
+	command = 'zenity --info'..title..text..icon..noWrap..width..height..timeout
 	os.execute(command)
 end
 
-function colorselection(title, showPalette, r, g, b)
+function colorselection(title, showPalette, r, g, b, timeout)
 	title = checkTitle(title)
 	showPalette = checkShowPalette(showPalette)
 	color = buildHex(r, g, b)
+	timeout = checkTimeout(timeout)
 	command = 'zenity --color-selection'..title..showPalette..color
 	local f = io.popen(command)
 	local l = f:read("*a")
 	f:close()
 	return l:gsub("\n",""):gsub("rgb%(",""):gsub("%)","")
+end
+
+function warning(title, text, icon, noWrap, width, height, timeout)
+	title = checkTitle(title)
+	text = checkText(text)
+	icon = checkIcons(icon)
+	noWrap = checkNoWrap(noWrap)
+	width = checkDimensions('width', width)
+	height = checkDimensions('height', height)
+	timeout = checkTimeout(timeout)
+	command = 'zenity --warning'..title..text..icon..noWrap..width..height..timeout
+	os.execute(command)
 end
