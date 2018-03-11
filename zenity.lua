@@ -113,6 +113,84 @@ function zenitySucks(x)
 	return x
 end
 
+function checkInitialFileName(initialFileName)
+	if initialFileName == nil or initialFileName == 0 then
+		initialFileName = ''
+	else
+		initialFileName = ' --filename='..tostring(initialFileName)
+	end
+	return initialFileName
+end
+
+function checkIfOverwriteMsg(overwriteMsg)
+	if overwriteMsg == false or overwriteMsg == nil or overwriteMsg == 0 then
+		overwriteMsg = ''
+	elseif overwriteMsg then
+		overwriteMsg = ' --confirm-overwrite'
+	else
+		assert(type(overwriteMsg) == 'boolean')
+	end
+	return overwriteMsg
+end
+
+function checkIfSave(isSave)
+	if isSave == false or isSave == nil or isSave == 0 then
+		isSave = ''
+	elseif isSave then
+		isSave = ' --save'
+	else
+		assert(type(isSave) == 'boolean')
+	end
+	return isSave
+end
+
+function checkIfDirectory(isDirectory)
+	if isDirectory == false or isDirectory == nil or isDirectory == 0 then
+		isDirectory = ''
+	elseif isDirectory then
+		isDirectory = ' --directory'
+	else
+		assert(type(isDirectory) == 'boolean')
+	end
+	return isDirectory
+end
+
+function checkSeparator(allowMultiple, separator)
+	if allowMultiple == 0 or allowMultiple == nil or allowMultiple == false then
+		separator = ''
+	elseif allowMultiple then
+		if separator == nil or separator == 0 then
+			separator = ''
+		else
+			separator = ' --separator="'..tostring(separator)..'"'
+		end
+	end
+	return separator
+end
+
+function checkAllowMultiple(allowMultiple)
+	if allowMultiple == 0 or allowMultiple == nil or allowMultiple == false then
+		allowMultiple = ''
+	elseif allowMultiple then
+		allowMultiple = ' --multiple'
+	else
+		assert(type(allowMultiple) == 'boolean')
+	end
+	return allowMultiple
+end
+
+function checkFileFilter(fileFilter)
+	mensagem = ''
+	if fileFilter == 0 or fileFilter == nil then
+		fileFilter = ''
+	else
+		for pos in ipairs(fileFilter) do
+			mensagem = mensagem..' --file-filter="'..tostring(fileFilter[pos])..'"'
+		end
+	end
+	return mensagem
+end
+
 function checkIcons(icon)
 	inList = false
 	iconsList = {
@@ -467,4 +545,20 @@ function warning(title, text, icon, noWrap, width, height, timeout)
 	timeout = checkTimeout(timeout)
 	command = 'zenity --warning'..title..text..icon..noWrap..width..height..timeout
 	os.execute(command)
+end
+
+function fileselection(title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
+	title = checkTitle(title)
+	fileFilter = checkFileFilter(fileFilter)
+	separator = checkSeparator(allowMultiple, separator)
+	allowMultiple = checkAllowMultiple(allowMultiple)
+	isDirectory = checkIfDirectory(isDirectory)
+	isSave = checkIfSave(isSave)
+	overwriteMsg = checkIfOverwriteMsg(overwriteMsg)
+	initialFileName = checkInitialFileName(initialFileName)
+	timeout = checkTimeout(timeout)
+	command = 'zenity --file-selection'..title..fileFilter..allowMultiple..separator..isDirectory..isSave..overwriteMsg..initialFileName..timeout
+	local f = io.popen(command)
+	local l = f:read("*a")
+	return l:gsub("\n","")
 end

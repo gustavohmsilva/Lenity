@@ -21,7 +21,7 @@ typedByTheUser = entry('window title','window example text')
  * ~~Implement Info~~
  * Implement Calendar
  * Implement Error
- * Implement file selection
+ * ~~Implement file selection~~
  * Implement list
  * Implement notification
  * Implement progress
