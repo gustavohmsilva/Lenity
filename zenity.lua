@@ -17,7 +17,6 @@ function checkText(text)
 end
 
 function checkShowPalette(showPalette)
-	assert(type(showPalette) == 'boolean')
 	if showPalette then
 		showPalette = ' --show-palette'
 	else
@@ -86,22 +85,26 @@ function checkNoWrap(noWrap)
 	return noWrap
 end
 
-function buildHex(r, g, b)
-	assert(r >= 0 and r < 256)
-	assert(g >= 0 and g < 256)
-	assert(b >= 0 and b < 256)
-	r = string.format("%x", r)
-	g = string.format("%x", g)
-	b = string.format("%x", b)
-	--[[
-	TODO: This function below is only required because zenity sucks at
-	interpreting hexadecimal colors with less than 6 chars, when zenity
-	solve this idiotic problem, this can be discarded.
-	]]--
-	r = zenitySucks(r)
-	g = zenitySucks(g)
-	b = zenitySucks(b)
-	color = ' --color=#'..r..g..b
+function buildHex(showPalette, r, g, b)
+	if showPalette then
+		assert(r >= 0 and r < 256)
+		assert(g >= 0 and g < 256)
+		assert(b >= 0 and b < 256)
+		r = string.format("%x", r)
+		g = string.format("%x", g)
+		b = string.format("%x", b)
+		--[[
+		TODO: This function below is only required because zenity sucks at
+		interpreting hexadecimal colors with less than 6 chars, when zenity
+		solve this idiotic problem, this can be discarded.
+		]]--
+		r = zenitySucks(r)
+		g = zenitySucks(g)
+		b = zenitySucks(b)
+		color = ' --color=#'..r..g..b
+	else
+		color = ''
+	end
 	return color
 end
 
@@ -526,7 +529,7 @@ end
 function colorselection(title, showPalette, r, g, b, timeout)
 	title = checkTitle(title)
 	showPalette = checkShowPalette(showPalette)
-	color = buildHex(r, g, b)
+	color = buildHex(showPalette, r, g, b)
 	timeout = checkTimeout(timeout)
 	command = 'zenity --color-selection'..title..showPalette..color
 	local f = io.popen(command)
