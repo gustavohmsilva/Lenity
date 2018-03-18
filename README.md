@@ -12,7 +12,8 @@ f:close()
 ```
 With Lenity:
 ```
-typedByTheUser = lenity.entry('window title','window example text')
+lenity = require 'lenity'
+lenity.entry('window title','window example text')
 ```
 
 ### Milestones:
