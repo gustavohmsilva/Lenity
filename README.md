@@ -1,6 +1,10 @@
 # LENITY
 Lenity is a small project aiming to make zenity more practical in the Lua language. We're aiming in an easy function oriented way to call zenity dialogs directly from Lua.
 
+<p align="center">
+  <img src="https://i.imgur.com/jbMgrG1.gif">
+</p>
+
 This project was created mainly by my need to be able to just call zenity dialogs from inside my Lua scripts making easy to write really simple "apps" that present a visual information to users who are afraid of the terminal. In theory, with this script you are able to just type info('title','text of the info message') to open the an info box on zenity from inside of your Lua scripts for example.
 
 ### Usage:
