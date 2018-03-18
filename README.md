@@ -12,7 +12,7 @@ f:close()
 ```
 With Lenity:
 ```
-typedByTheUser = entry('window title','window example text')
+typedByTheUser = zenity.entry('window title','window example text')
 ```
 
 ### Milestones:
