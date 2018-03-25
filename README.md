@@ -24,8 +24,8 @@ lenity.entry('window title','window example text')
  * Fully implement tests for fields
  * ~~Implement Entry~~
  * ~~Implement Info~~
- * Implement Calendar
- * Implement Error
+ * ~~Implement Calendar~~
+ * ~~Implement Error~~
  * ~~Implement file selection~~
  * Implement list
  * Implement notification

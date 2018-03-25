@@ -105,11 +105,30 @@ if verifyZ() then
 		function z.checkNoWrap(noWrap)
 			if noWrap == 0 or noWrap == nil then
 				noWrap = ''
-			elseif noWrap then
-				assert(type(noWrap) == 'boolean', "Input Error 'noWrap' isn't a boolean value")
-				noWrap = ' --no-wrap'
+			else
+				if noWrap then
+					assert(type(noWrap) == 'boolean', "Input Error: 'noWrap' isn't a boolean value")
+					noWrap = ' --no-wrap'
+				else
+					noWrap = ''
+				end
 			end
 			return noWrap
+		end
+
+		function z.checkNoMarkup(noMarkup)
+			if noMarkup == 0 or noMarkup == nil then
+				noMarkup = ''
+			else
+				if noMarkup then
+					assert(type(noMarkup) == 'boolean', "Input Error: 'noMarkup' isn't a boolean value")
+					noMarkup = ' --no-markup'
+				else
+					assert(type(noMarkup) == 'boolean', "Input Error: 'noMarkup' isn't a boolean value")
+					noMarkup = ''
+				end
+			end
+			return noMarkup
 		end
 
 		function z.buildHex(showPalette, r, g, b)
@@ -235,6 +254,30 @@ if verifyZ() then
 				end
 			end
 			return mensagem
+		end
+
+		function z.checkDate(month, day, year)
+			if month == 0 or month == nil then
+				date = ''
+			else
+				assert(type(month) == 'number', "Input Error: 'month' isn't a valid integer")
+				assert(type(day) == 'number', "Input Error: 'day' isn't a valid integer")
+				assert(type(year) == 'number', "Input Error: 'year' isn't a valid integer")
+				assert((month < 13 and month > 0), "Input Error: 'month' isn't a valid month")
+				assert((day < 32 and day > 0), "Input Error: 'day' isn't a valid day")
+				date = ' --month='..month..' --day='..day..' --year='..year
+			end
+			return date
+		end
+
+		function z.checkDateFormat(dateFormat)
+			if dateFormat == 0 or dateFormat == nil then
+				dateFormat = ''
+			else
+				assert(type(dateFormat) == 'string', "Input Error: 'dateFormat' isn't a valid string")
+				dateFormat = ' --date-format="'..dateFormat..'"'
+			end
+			return dateFormat
 		end
 
 		function z.checkIcons(icon)
@@ -599,7 +642,7 @@ if verifyZ() then
 		end
 
 		function z.fileselection(title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
-			title = checkTitle(title)
+			title = z.checkTitle(title)
 			fileFilter = z.checkFileFilter(fileFilter)
 			separator = z.checkSeparator(allowMultiple, separator)
 			allowMultiple = z.checkAllowMultiple(allowMultiple)
@@ -609,6 +652,33 @@ if verifyZ() then
 			initialFileName = z.checkInitialFileName(initialFileName)
 			timeout = z.checkTimeout(timeout)
 			command = 'zenity --file-selection'..title..fileFilter..allowMultiple..separator..isDirectory..isSave..overwriteMsg..initialFileName..timeout
+			local f = io.popen(command)
+			local l = f:read("*a")
+			return l:gsub("\n","")
+		end
+
+		function z.error(title, text, noWrap, noMarkup, width, height, timeout)
+			title = z.checkTitle(title)
+			text = z.checkText(text)
+			noWrap = z.checkNoWrap(noWrap)
+			noMarkup = z.checkNoMarkup(noMarkup)
+			width = z.checkDimensions('width', width)
+			height = z.checkDimensions('height', height)
+			timeout = z.checkTimeout(timeout)
+			command = 'zenity --error'..title..text..noWrap..noMarkup..width..height..timeout
+			os.execute(command)
+		end
+
+		function z.calendar(title, text, month, day, year, dateFormat, width, height, noMarkup, timeout)
+			title = z.checkTitle(title)
+			text = z.checkText(text)
+			noMarkup = z.checkNoMarkup(noMarkup)
+			width = z.checkDimensions('width', width)
+			height = z.checkDimensions('height', height)
+			timeout = z.checkTimeout(timeout)
+			date = z.checkDate(month, day, year)
+			dateFormat = z.checkDateFormat(dateFormat)
+			command = 'zenity --calendar'..title..text..date..dateFormat..width..height..noMarkup..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
