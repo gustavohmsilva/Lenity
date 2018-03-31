@@ -10,7 +10,6 @@ end
 
 if verifyZ() then
 	local z = {}
-
 		function z.checkTitle(title)
 			if title == nil or title == 0 then
 				title = ''
@@ -278,6 +277,21 @@ if verifyZ() then
 				dateFormat = ' --date-format="'..dateFormat..'"'
 			end
 			return dateFormat
+		end
+
+		function z.checkButtonLabel(btnType, label)
+			if label == nil or label == 0 then
+				label = ''
+			else
+				message = "input Error: '"..btnType.."Label' isn't a valid string"
+				assert(type(label) == 'string', message)
+				if btnType == 'ok' then
+					label = ' --ok-label="'..label..'"'
+				elseif btnType == 'cancel' then
+					label = ' --cancel-label="'..label..'"'
+				end
+			end
+			return label
 		end
 
 		function z.checkIcons(icon)
@@ -682,6 +696,25 @@ if verifyZ() then
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
+		end
+
+		function z.question(title, text, okLabel, cancelLabel, noWrap, noMarkup, width, height, timeout)
+			title = z.checkTitle(title)
+			text = z.checkText(text)
+			noMarkup = z.checkNoMarkup(noMarkup)
+			width = z.checkDimensions('width', width)
+			height = z.checkDimensions('height', height)
+			timeout = z.checkTimeout(timeout)
+			noWrap = z.checkNoWrap(noWrap)
+			okLabel = z.checkButtonLabel('ok', okLabel)
+			cancelLabel = z.checkButtonLabel('cancel', cancelLabel)
+			command = 'zenity --question'..title..text..okLabel..cancelLabel..noWrap..noMarkup..width..height..timeout
+			result = os.execute(command)
+			if result == nil then
+				return false
+			elseif result == true then
+				return result
+			end
 		end
 	return z
 else

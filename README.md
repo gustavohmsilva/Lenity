@@ -30,7 +30,7 @@ lenity.entry('window title','window example text')
  * Implement list
  * Implement notification
  * Implement progress
- * Implement question
+ * ~~Implement question~~
  * Implement text information
  * ~~implement warning~~
  * Implement scale
