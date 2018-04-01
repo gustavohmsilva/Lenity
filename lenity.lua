@@ -294,6 +294,20 @@ if verifyZ() then
 			return label
 		end
 
+		function z.checkShowUsername(showUsername)
+			if showUsername == nil or showUsername == nil then
+				showUsername = ''
+			else
+				assert(type(showUsername) == 'boolean', "Input Error: 'showUsername' isn't a valid boolean value")
+				if showUsername then
+					showUsername = ' --username'
+				else
+					showUsername = ''
+				end
+			end
+			return showUsername
+		end
+
 		function z.checkIcons(icon)
 			if icon == 0 or icon == nil then
 				return ''
@@ -715,6 +729,30 @@ if verifyZ() then
 			elseif result == true then
 				return result
 			end
+		end
+
+		function z.notification(title, text, timeout)
+			-- I decided not to use "zenity --notification" because of his bugs, exchanged to notify-send
+			assert(type(title) == 'string', "Input Error: 'title' isn't a valid string")
+			assert(type(text) == 'string', "Input Error: 'text' isn't a valid string")
+			assert(type(timeout) == 'number', "Input Error: timeout isn't a valid number")
+			timeout = timeout * 1000
+			command = 'notify-send -t '..tostring(timeout)..' "'..title..'" "'..text..'"'
+			os.execute(command)
+		end
+
+		function z.password(title, showUsername, okLabel, cancelLabel, noMarkup, timeout)
+			--TODO: Zenity has a shitty implementation for this. Text, icon and separator are impossible to change! Shitty AF! If they ever decide to fix this, this function needs to be upgraded
+			title = z.checkTitle(title)
+			noMarkup = z.checkNoMarkup(noMarkup)
+			timeout = z.checkTimeout(timeout)
+			okLabel = z.checkButtonLabel('ok', okLabel)
+			cancelLabel = z.checkButtonLabel('cancel', cancelLabel)
+			showUsername = z.checkShowUsername(showUsername)
+			command = 'zenity --password'..title..showUsername..okLabel..cancelLabel..noMarkup..timeout
+			local f = io.popen(command)
+			local l = f:read("*a")
+			return l:gsub("\n","")
 		end
 	return z
 else

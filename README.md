@@ -28,7 +28,7 @@ lenity.entry('window title','window example text')
  * ~~Implement Error~~
  * ~~Implement file selection~~
  * Implement list
- * Implement notification
+ * ~~Implement notification~~ PS: Replaced for notify-send due to poor Zenity Implementation of --notification
  * Implement progress
  * ~~Implement question~~
  * Implement text information
@@ -36,7 +36,7 @@ lenity.entry('window title','window example text')
  * Implement scale
  * ~~Implement color selection~~
  * Implement forms
- * Implement Password *(Maybe redundant due to entry)*
+ * ~~Implement Password~~   
 
 ### Licensing:
 This repository is entirely Open Source, licensed under GNU General Public License 3.0, 29 June 2007.   
