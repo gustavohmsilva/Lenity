@@ -308,6 +308,32 @@ if verifyZ() then
 			return showUsername
 		end
 
+		function z.checkFilename(filename)
+			if filename == 0 or filename == nil then
+				filename = ''
+			else
+				assert(type(filename) == 'string', "Input Error: Variable 'filename' isn't a valid string")
+				filename = ' --filename="'..filename..'"'
+			end
+			return filename
+		end
+
+		function z.checkIfHasCheckbox(hasCheckbox, checkboxText)
+			if hasCheckbox == 0 or hasCheckbox == nil then
+				hasCheckbox = ''
+			else
+				assert(type(hasCheckbox) == 'boolean', "Input Error: Variable 'hasCheckbox' isn't a valid boolean")
+				assert(type(checkboxText) == 'string', "Input Error, Variable 'checkboxText' isn't a valid string")
+				if checkboxText == '' then checkboxText = "I've read and accept the terms and conditions." end
+				if hasCheckbox then
+					hasCheckbox = ' --checkbox="'..checkboxText..'"'
+				else
+					hasCheckbox = ''
+				end
+			end
+			return hasCheckbox
+		end
+
 		function z.checkIcons(icon)
 			if icon == 0 or icon == nil then
 				return ''
@@ -753,6 +779,22 @@ if verifyZ() then
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
+		end
+
+		function z.textinfo(title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel width, height, timeout)
+			title = z.checkTitle(title)
+			filename = z.checkFilename(filename)
+			isEditable = z.checkIfIsEditable(isEditable)
+			hasCheckbox = z.checkIfHasCheckbox(hasCheckbox, checkboxText)
+			okLabel = z.checkButtonLabel('ok', okLabel)
+			cancelLabel = z.checkButtonLabel('cancel', cancelLabel)
+			width = z.checkDimensions('width', width)
+			height = z.checkDimensions('height', height)
+			timeout = z.checkTimeout(timeout)
+			command = 'zenity --text-info'..title..filename..isEditable..hasCheckbox..okLabel..canelLabel..width..height..timeout
+			local f = io.popen(command)
+			local l = f:read("*a")
+			return l
 		end
 	return z
 else

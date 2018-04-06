@@ -28,15 +28,19 @@ lenity.entry('window title','window example text')
  * ~~Implement Error~~
  * ~~Implement file selection~~
  * Implement list
- * ~~Implement notification~~ PS: Replaced for notify-send due to poor Zenity Implementation of --notification
- * Implement progress
+ * ~~Implement notification~~ +
+ * Implement progress ++
  * ~~Implement question~~
- * Implement text information
+ * ~~Implement text information~~
  * ~~implement warning~~
  * Implement scale
  * ~~Implement color selection~~
  * Implement forms
- * ~~Implement Password~~   
+ * ~~Implement Password~~      
+
+
+<i> OBS 1: Replaced for notify-send due to poor Zenity Implementation of --notification. </i>   
+<i> OBS 2: Due to Zenity implementation, it's only possible to create --progress pulsating variant. </i>
 
 ### Licensing:
 This repository is entirely Open Source, licensed under GNU General Public License 3.0, 29 June 2007.   
