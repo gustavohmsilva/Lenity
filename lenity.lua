@@ -323,8 +323,9 @@ if verifyZ() then
 				hasCheckbox = ''
 			else
 				assert(type(hasCheckbox) == 'boolean', "Input Error: Variable 'hasCheckbox' isn't a valid boolean")
-				assert(type(checkboxText) == 'string', "Input Error, Variable 'checkboxText' isn't a valid string")
-				if checkboxText == '' then checkboxText = "I've read and accept the terms and conditions." end
+				if checkboxText == '' or checkboxText == 0 or checkboxText == nil then
+					checkboxText = "I've read and accept the terms and conditions."
+				end
 				if hasCheckbox then
 					hasCheckbox = ' --checkbox="'..checkboxText..'"'
 				else
@@ -332,6 +333,20 @@ if verifyZ() then
 				end
 			end
 			return hasCheckbox
+		end
+
+		function z.checkIfIsEditable(isEditable)
+			if isEditable == 0 or isEditable == nil then
+				isEditable = ''
+			else
+				assert(type(isEditable) == 'boolean', "Input Error: 'isEditable' isn't a valid boolean")
+				if isEditable then
+					isEditable = ' --editable'
+				else
+					isEditable = ''
+				end
+			end
+			return isEditable
 		end
 
 		function z.checkIcons(icon)
@@ -781,7 +796,7 @@ if verifyZ() then
 			return l:gsub("\n","")
 		end
 
-		function z.textinfo(title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel width, height, timeout)
+		function z.textinfo(title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel, width, height, timeout)
 			title = z.checkTitle(title)
 			filename = z.checkFilename(filename)
 			isEditable = z.checkIfIsEditable(isEditable)
@@ -791,11 +806,13 @@ if verifyZ() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --text-info'..title..filename..isEditable..hasCheckbox..okLabel..canelLabel..width..height..timeout
+			command = 'zenity --text-info'..title..filename..isEditable..hasCheckbox..okLabel..cancelLabel..width..height..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l
 		end
+
+		--[[TODO: zenity --scale --title="titulo" --text="texto" --ok-label="confirma" --cancel-label="não confirma" --value=50 --min-value=0 --max-value=100 --step=5 --hide-value]]--
 	return z
 else
 	return 'Error!'

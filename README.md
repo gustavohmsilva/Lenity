@@ -33,7 +33,7 @@ lenity.entry('window title','window example text')
  * ~~Implement question~~
  * ~~Implement text information~~
  * ~~implement warning~~
- * Implement scale
+ * Implement scale +++
  * ~~Implement color selection~~
  * Implement forms
  * ~~Implement Password~~      
@@ -41,6 +41,7 @@ lenity.entry('window title','window example text')
 
 <i> OBS 1: Replaced for notify-send due to poor Zenity Implementation of --notification. </i>   
 <i> OBS 2: Due to Zenity implementation, it's only possible to create --progress pulsating variant. </i>
+<i> OBS 3: Due to Zenity implementation, it's only possible to create --print-partial variant of this. </i>
 
 ### Licensing:
 This repository is entirely Open Source, licensed under GNU General Public License 3.0, 29 June 2007.   
