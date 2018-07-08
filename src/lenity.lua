@@ -335,6 +335,40 @@ if verifyZ() then
 			return hasCheckbox
 		end
 
+		function z.checkColumns(columns)
+			assert(type(columns) == 'table', "Input Error: 'columns' isn't a valid Table")
+			for _ in ipairs(columns) do
+				assert(type(columns[_]) == 'string', "Input Error: "..columns[_].." isn't a valid string within the columns table.")
+			end
+			rtrnString = ''
+			for _ in ipairs(columns) do
+				rtrnString = rtrnString..' --column="'..columns[_]..'"'
+			end
+			return rtrnString
+		end
+
+		function z.checkStrings(strings)
+			assert(type(strings) == 'table', "Input Error: 'strings' isn't a valid Table")
+			for _ in ipairs(strings) do
+				assert(type(strings[_]) == 'string', "Input Error: "..strings[_].." isn't a valid string within the strings table.")
+			end
+			rtrnString = ''
+			for _ in ipairs(strings) do
+				rtrnString = rtrnString..' "'..strings[_]..'"'
+			end
+			return rtrnString
+		end
+
+		function z.checkSelectionType(radioOrCheckOrNone)
+			if radioOrCheckOrNone == 0 or radioOrCheckOrNone == nil or radioOrCheckOrNone == "None" then
+				return ''
+			elseif radioOrCheckOrNone == "check" or radioOrCheckOrNone == 1 then
+				return ' --checklist'
+			elseif radioOrCheckOrNone == "radio" or radioOrCheckOrNone == 2 then
+				return ' --radiolist'
+			end
+		end
+
 		function z.checkIfIsEditable(isEditable)
 			if isEditable == 0 or isEditable == nil then
 				isEditable = ''
@@ -810,6 +844,23 @@ if verifyZ() then
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l
+		end
+
+		function z.list(title, text, allowMultiple, separator, radioOrCheckOrNone, columns, strings, width, height, timeout)
+			title = z.checkTitle(title)
+			text = z.checkText(text)
+			allowMultiple = z.checkAllowMultiple(allowMultiple)
+			separator = z.checkSeparator(allowMultiple, separator)
+			radioOrCheckOrNone = z.checkSelectionType(radioOrCheckOrNone) -- NOT IMPLEMENTED
+			columns = z.checkColumns(columns)
+			strings = z.checkStrings(strings)
+			width = z.checkDimensions('width', width)
+			height = z.checkDimensions('height', height)
+			timeout = z.checkTimeout(timeout)
+			command = 'zenity --list '..title..text..separator..radioOrCheckOrNone..columns..strings..width..height..timeout
+			local f = io.popen(command)
+			local l = f:read("*a")
+			return l:gsub("\n","")
 		end
 
 		--[[TODO: zenity --scale --title="titulo" --text="texto" --ok-label="confirma" --cancel-label="não confirma" --value=50 --min-value=0 --max-value=100 --step=5 --hide-value]]--
