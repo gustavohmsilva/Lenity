@@ -10,7 +10,7 @@ function verifyZenity()
 end
 
 function verify()
-	verifyQarma = os.execute('which jesus')
+	verifyQarma = os.execute('which qarma')
 	if verifyQarma == nil then
 		print("The Qarma dialog tool was not found!\nAlthough optional, functionality will be limited.")
 		return verifyZenity()
