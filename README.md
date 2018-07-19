@@ -27,7 +27,7 @@ lenity.entry('window title','window example text')
  * ~~Implement Calendar~~
  * ~~Implement Error~~
  * ~~Implement file selection~~
- * Implement list
+ * ~~Implement list~~
  * ~~Implement notification~~ +
  * Implement progress ++
  * ~~Implement question~~
