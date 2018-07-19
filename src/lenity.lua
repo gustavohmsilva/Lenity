@@ -1,15 +1,36 @@
-function verifyZ()
+function verifyZenity()
 	verifyZenity = os.execute('which zenity')
 	if verifyZenity == nil then
 		print("Zenity isn't installed on this system or isn't reacheable within the $PATH of the system.")
+		print("If Qarma is available, you can still use this library, but functionality will be limited.")
 		return false
 	else
 		return true
 	end
 end
 
-if verifyZ() then
+function verify()
+	verifyQarma = os.execute('which jesus')
+	if verifyQarma == nil then
+		print("The Qarma dialog tool was not found!\nAlthough optional, functionality will be limited.")
+		return verifyZenity()
+	else
+		return verifyZenity()
+	end
+end
+
+if verify() then
 	local z = {}
+		function z.checkGui(gui)
+			if qui == nil or qui == 0 or gui == 'zenity' then
+				return 'zenity '
+			elseif gui == 'qarma' then
+				return 'qarma '
+			else
+				print("You must provide a valid Dialog tool\nValid options are:\n\t'nil OR 0 for standard Dialog tool\n\t'qarma'\n\t'zenity'")
+			end
+		end
+
 		function z.checkTitle(title)
 			if title == nil or title == 0 then
 				title = ''
@@ -247,7 +268,7 @@ if verifyZ() then
 			if fileFilter == 0 or fileFilter == nil then
 				fileFilter = ''
 			else
-				assert(type(checkFileFilter) == 'table', "Input Error: 'fileFilter' isn't a valid table")
+				assert(type(fileFilter) == 'table', "Input Error: 'fileFilter' isn't a valid table")
 				for pos in ipairs(fileFilter) do
 					mensagem = mensagem..' --file-filter="'..tostring(fileFilter[pos])..'"'
 				end
@@ -691,8 +712,9 @@ if verifyZ() then
 			return icon
 		end
 
-		function z.entry(title, text, entryText, isPassword, width, height, timeout)
+		function z.entry(gui, title, text, entryText, isPassword, width, height, timeout)
 			-- call validation of fields
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			entryText = z.checkEntryText(entryText)
@@ -708,7 +730,8 @@ if verifyZ() then
 			return l:gsub("\n","")
 		end
 
-		function z.info(title, text, icon, noWrap, width, height, timeout)
+		function z.info(gui, title, text, icon, noWrap, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			icon = z.checkIcons(icon)
@@ -720,10 +743,11 @@ if verifyZ() then
 			os.execute(command)
 		end
 
-		function z.colorselection(title, showPalette, r, g, b, timeout)
+		function z.colorselection(gui, title, showPalette, r, g, b, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
-			showPalette = z.checkShowPalette(showPalette)
 			color = z.buildHex(showPalette, r, g, b)
+			showPalette = z.checkShowPalette(showPalette)
 			timeout = z.checkTimeout(timeout)
 			command = 'zenity --color-selection'..title..showPalette..color
 			local f = io.popen(command)
@@ -732,7 +756,8 @@ if verifyZ() then
 			return l:gsub("\n",""):gsub("rgb%(",""):gsub("%)","")
 		end
 
-		function z.warning(title, text, icon, noWrap, width, height, timeout)
+		function z.warning(gui, title, text, icon, noWrap, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			icon = z.checkIcons(icon)
@@ -744,7 +769,8 @@ if verifyZ() then
 			os.execute(command)
 		end
 
-		function z.fileselection(title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
+		function z.fileselection(gui, title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			fileFilter = z.checkFileFilter(fileFilter)
 			separator = z.checkSeparator(allowMultiple, separator)
@@ -760,7 +786,8 @@ if verifyZ() then
 			return l:gsub("\n","")
 		end
 
-		function z.error(title, text, noWrap, noMarkup, width, height, timeout)
+		function z.error(gui, title, text, noWrap, noMarkup, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			noWrap = z.checkNoWrap(noWrap)
@@ -772,7 +799,8 @@ if verifyZ() then
 			os.execute(command)
 		end
 
-		function z.calendar(title, text, month, day, year, dateFormat, width, height, noMarkup, timeout)
+		function z.calendar(gui, title, text, month, day, year, dateFormat, width, height, noMarkup, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			noMarkup = z.checkNoMarkup(noMarkup)
@@ -787,7 +815,8 @@ if verifyZ() then
 			return l:gsub("\n","")
 		end
 
-		function z.question(title, text, okLabel, cancelLabel, noWrap, noMarkup, width, height, timeout)
+		function z.question(gui, title, text, okLabel, cancelLabel, noWrap, noMarkup, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			noMarkup = z.checkNoMarkup(noMarkup)
@@ -816,8 +845,9 @@ if verifyZ() then
 			os.execute(command)
 		end
 
-		function z.password(title, showUsername, okLabel, cancelLabel, noMarkup, timeout)
+		function z.password(gui, title, showUsername, okLabel, cancelLabel, noMarkup, timeout)
 			--TODO: Zenity has a shitty implementation for this. Text, icon and separator are impossible to change! Shitty AF! If they ever decide to fix this, this function needs to be upgraded
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			noMarkup = z.checkNoMarkup(noMarkup)
 			timeout = z.checkTimeout(timeout)
@@ -830,7 +860,8 @@ if verifyZ() then
 			return l:gsub("\n","")
 		end
 
-		function z.textinfo(title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel, width, height, timeout)
+		function z.textinfo(gui, title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			filename = z.checkFilename(filename)
 			isEditable = z.checkIfIsEditable(isEditable)
@@ -846,7 +877,8 @@ if verifyZ() then
 			return l
 		end
 
-		function z.list(title, text, allowMultiple, separator, radioOrCheckOrNone, columns, strings, width, height, timeout)
+		function z.list(gui, title, text, allowMultiple, separator, radioOrCheckOrNone, columns, strings, width, height, timeout)
+			gui = z.checkGui(gui)
 			title = z.checkTitle(title)
 			text = z.checkText(text)
 			allowMultiple = z.checkAllowMultiple(allowMultiple)
