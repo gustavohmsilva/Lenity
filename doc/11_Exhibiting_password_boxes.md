@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.password(title, showUsername, okLabel, cancelLabel, noMarkup, timeout)
+lenity.password(gui, title, showUsername, okLabel, cancelLabel, noMarkup, timeout)
 ```
 The password function is the equivalent to zenity --password option, and display a simple login and password dialog to be filled by the user, with the standard ok and cancel buttons so the user can confirm or avoid filling the field. This function returns a string with the information USER|PASSWORD entered.
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.
@@ -20,7 +23,7 @@ Same of okLabel, but for the cancel/no button. Also accepts nil or 0 as bypass o
 NoMarkup is a boolean variable, that determines if the text will support pango Markdown or not. noMarkup also accept nil or zero as it's content, which will default it to false.
 
 ### timeout:
-This is a number variable field, fill something if you want that the dialog disapears after a certain period of time. It also handles nil and 0 as no time limit for the form to be filled.   
-   
-   
+This is a number variable field, fill something if you want that the dialog disapears after a certain period of time. It also handles nil and 0 as no time limit for the form to be filled.
+
+
 **IMPORTANT:** This implementation is very poor by Zenity's part. Isn't it possible to change text, size of the windows and wrapping of the text. This can only be updated though, when the developers of Zenity decided to make this better.

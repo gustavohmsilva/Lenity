@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.list(title, text, allowMultiple, separator, radioOrCheckOrNone, columns, strings, width, height, timeout)
+lenity.list(gui, title, text, allowMultiple, separator, radioOrCheckOrNone, columns, strings, width, height, timeout)
 ```
 The list function is the equivalent to zenity --list option, and display a simple list for single and multiple selection for the user, depending of the options entered. This function returns a string with the information RETURN INFO1|RETURNINFO2|RETURNINFOn entered by the user.
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.

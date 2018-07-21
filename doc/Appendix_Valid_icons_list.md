@@ -1,8 +1,8 @@
-Be advised that Icons currently aren't available on Mac OS and Microsoft Windows.   
-The reason for that is because the icons aren't actually part of the Zenity Package or Dependencies,   
-but are in fact part of the Gnome/KDE/XFCE/ETC Desktop Environment.   
+Be advised that Icons currently aren't available on Mac OS and Microsoft Windows. The reason for that is because the icons aren't actually part of the Zenity Package or Dependencies, but are in fact part of the Gnome/KDE/XFCE/ETC Desktop Environment.
 
-Icons List:   
+Also, Qarma don't seem to support personalized Icons whatsoever at this moment.
+
+Icons List:
 
 address-book-new   
 application-exit   
@@ -263,7 +263,7 @@ network-offline
 network-receive   
 network-transmit   
 network-transmit-receive   
-printer-error      
+printer-error   
 printer-printing   
 security-high   
 security-medium   
@@ -289,4 +289,5 @@ weather-severe-alert
 weather-showers   
 weather-showers-scattered   
 weather-snow   
-weather-storm
+weather-storm   
+   

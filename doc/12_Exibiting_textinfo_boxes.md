@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.textinfo(title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel, width, height, timeout)
+lenity.textinfo(gui, title, filename, isEditable, hasCheckbox, checkboxText, okLabel, cancelLabel, width, height, timeout)
 ```
 The textinfo function is the equivalent to zenity --textinfo option, and display the content of a text file, followed by a range of buttons. This function has it's return modified by the options within its's call, it can return the text modified by the user (if isEditable variable is set to true) or simply a boolean return in most cases. The usage is as follows:
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.
@@ -29,4 +32,4 @@ Same of okLabel, but for the cancel/no button. Also accepts nil or 0 as bypass o
 Pretty self explanatory, both variables must have a number, nil, or zero as it's parameters, you can also not fill it at all and a width and height will be given to you by zenity based on the text width and formatting.
 
 ### timeout:
-This is a number variable field, fill something if you want that the dialog disapears after a certain period of time. It also handles nil and 0 as no time limit for the form to be filled.   
+This is a number variable field, fill something if you want that the dialog disapears after a certain period of time. It also handles nil and 0 as no time limit for the form to be filled.

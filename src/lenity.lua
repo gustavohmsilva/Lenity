@@ -723,7 +723,7 @@ if verify() then
 			width = z.checkDimensions("width", width)
 			timeout = z.checkTimeout(timeout)
 			-- process zenity command and return
-			local command = "zenity --entry"..title..text..entryText..isPassword..width..height..timeout
+			local command = gui..'--entry'..title..text..entryText..isPassword..width..height..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			f:close()
@@ -739,7 +739,7 @@ if verify() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --info'..title..text..icon..noWrap..width..height..timeout
+			command = gui..'--info'..title..text..icon..noWrap..width..height..timeout
 			os.execute(command)
 		end
 
@@ -749,7 +749,7 @@ if verify() then
 			color = z.buildHex(showPalette, r, g, b)
 			showPalette = z.checkShowPalette(showPalette)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --color-selection'..title..showPalette..color
+			command = gui..'--color-selection'..title..showPalette..color
 			local f = io.popen(command)
 			local l = f:read("*a")
 			f:close()
@@ -765,7 +765,7 @@ if verify() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --warning'..title..text..icon..noWrap..width..height..timeout
+			command = gui..'--warning'..title..text..icon..noWrap..width..height..timeout
 			os.execute(command)
 		end
 
@@ -780,7 +780,7 @@ if verify() then
 			overwriteMsg = z.checkIfOverwriteMsg(overwriteMsg)
 			initialFileName = z.checkInitialFileName(initialFileName)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --file-selection'..title..fileFilter..allowMultiple..separator..isDirectory..isSave..overwriteMsg..initialFileName..timeout
+			command = gui..'--file-selection'..title..fileFilter..allowMultiple..separator..isDirectory..isSave..overwriteMsg..initialFileName..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
@@ -795,7 +795,7 @@ if verify() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --error'..title..text..noWrap..noMarkup..width..height..timeout
+			command = gui..'--error'..title..text..noWrap..noMarkup..width..height..timeout
 			os.execute(command)
 		end
 
@@ -809,7 +809,7 @@ if verify() then
 			timeout = z.checkTimeout(timeout)
 			date = z.checkDate(month, day, year)
 			dateFormat = z.checkDateFormat(dateFormat)
-			command = 'zenity --calendar'..title..text..date..dateFormat..width..height..noMarkup..timeout
+			command = gui..'--calendar'..title..text..date..dateFormat..width..height..noMarkup..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
@@ -826,7 +826,7 @@ if verify() then
 			noWrap = z.checkNoWrap(noWrap)
 			okLabel = z.checkButtonLabel('ok', okLabel)
 			cancelLabel = z.checkButtonLabel('cancel', cancelLabel)
-			command = 'zenity --question'..title..text..okLabel..cancelLabel..noWrap..noMarkup..width..height..timeout
+			command = gui..'--question'..title..text..okLabel..cancelLabel..noWrap..noMarkup..width..height..timeout
 			result = os.execute(command)
 			if result == nil then
 				return false
@@ -854,7 +854,7 @@ if verify() then
 			okLabel = z.checkButtonLabel('ok', okLabel)
 			cancelLabel = z.checkButtonLabel('cancel', cancelLabel)
 			showUsername = z.checkShowUsername(showUsername)
-			command = 'zenity --password'..title..showUsername..okLabel..cancelLabel..noMarkup..timeout
+			command = gui..'--password'..title..showUsername..okLabel..cancelLabel..noMarkup..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")
@@ -871,7 +871,7 @@ if verify() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --text-info'..title..filename..isEditable..hasCheckbox..okLabel..cancelLabel..width..height..timeout
+			command = gui..'--text-info'..title..filename..isEditable..hasCheckbox..okLabel..cancelLabel..width..height..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l
@@ -889,7 +889,7 @@ if verify() then
 			width = z.checkDimensions('width', width)
 			height = z.checkDimensions('height', height)
 			timeout = z.checkTimeout(timeout)
-			command = 'zenity --list '..title..text..separator..radioOrCheckOrNone..columns..strings..width..height..timeout
+			command = gui..'--list '..title..text..separator..radioOrCheckOrNone..columns..strings..width..height..timeout
 			local f = io.popen(command)
 			local l = f:read("*a")
 			return l:gsub("\n","")

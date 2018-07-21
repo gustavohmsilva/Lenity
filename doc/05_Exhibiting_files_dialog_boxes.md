@@ -1,7 +1,10 @@
 ## Usage:
 ```
-lenity.fileselection(title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
+lenity.fileselection(gui, title, fileFilter, allowMultiple, separator, isDirectory, isSave, overwriteMsg, initialFileName, timeout)
 ```
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.
@@ -14,8 +17,8 @@ acceptedFileTypes = {
                         "Plain Text | *.txt",
                         "Microsoft Word | *.doc *.docx",
                      }
-fileselection(title, acceptedFileTypes, ...
-``` 
+fileselection(gui, title, acceptedFileTypes, ...
+```
 
 ### separator:
 This field must be filled by the character or string of characters you want to be displayed between multiple selections of files in the return of the function. This field will automatically be disabled if allowMultiple is set to false. to disable/bypass it, you can provide them with nil or 0.

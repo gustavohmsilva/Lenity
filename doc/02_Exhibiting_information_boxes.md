@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.info(title, text, icon, noWrap, width, height, timeout)
+lenity.info(gui, title, text, icon, noWrap, width, height, timeout)
 ```
 The info function is the equivalent to zenity --info option, and display a simple message and a OK/Confirm button so the user acknowledge that the information was visualized. this function doesn't return anything as there isn't any return from the user other than clicking OK/Confirm.
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.

@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.entry(title, text, entryText, isPassword, width, height, timeout)
+lenity.entry(gui, title, text, entryText, isPassword, width, height, timeout)
 ```
 The entry function is the equivalent to zenity --entry option, and it collects data typed by the user with an ok and cancel button. this function return a string containing the text typed.
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.

@@ -1,8 +1,11 @@
 ## Usage:
 ```
-lenity.question(title, text, oklabel, cancelLabel, noWrap, noMarkup, width, height, timeout)
+lenity.question(gui, title, text, oklabel, cancelLabel, noWrap, noMarkup, width, height, timeout)
 ```
 The question function is the equivalent to zenity --question option, and display a simple message and a OK and Cancel button so the user can accept or denity something. This function return true or false, depending of the button pressed.
+
+### gui:
+This parameter is used to select between Zenity (GTK) or Qarma (Qt4/5). To use Zenity as the GUI dialog just put nil, 0 or the string 'zenity', for Qarma, just put the string 'qarma'
 
 ### title:
 The title parameter accepts a string, and it's content will be displayed in the top of the GUI window.
