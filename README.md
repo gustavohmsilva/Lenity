@@ -62,4 +62,5 @@ All work derivative work and/or third party distribution must keep the name of i
 
 ### Contributors:
 This is the official contributors list, if you had collaborated with the project with code, please add your name to this list and someone will review the push request shortly.
- * Gustavo Henrique Machado da Silva
+ * [Gustavo Henrique Machado da Silva](https://gitlab.com/gustavohmsilva)   
+ * [Edson Vasconcelos](https://gitlab.com/edsondsv)
