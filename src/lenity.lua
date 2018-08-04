@@ -1,5 +1,5 @@
 function verifyZenity()
-	verifyZenity = os.execute('which zenity')
+	verifyZenity = os.execute('zenity -v')
 	if verifyZenity == nil then
 		print("Zenity isn't installed on this system or isn't reacheable within the $PATH of the system.")
 		print("If Qarma is available, you can still use this library, but functionality will be limited.")
@@ -10,7 +10,7 @@ function verifyZenity()
 end
 
 function verify()
-	verifyQarma = os.execute('which qarma')
+	verifyQarma = os.execute('qarma -h')
 	if verifyQarma == nil then
 		print("The Qarma dialog tool was not found!\nAlthough optional, functionality will be limited.")
 		return verifyZenity()
@@ -22,7 +22,7 @@ end
 if verify() then
 	local z = {}
 		function z.checkGui(gui)
-			if qui == nil or qui == 0 or gui == 'zenity' then
+			if gui == nil or gui == 0 or gui == 'zenity' then
 				return 'zenity '
 			elseif gui == 'qarma' then
 				return 'qarma '
